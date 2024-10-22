@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+r=$(shome -n hms run mensa_ui 2>&1)
+shome_content="${r//Program finished successfully/<h3>CASUAL CODING</h3><br>}"
+
+content="
+<!doctype html>
+<html lang='en'>
+<head>
+<title>CASUAL CODING</title>
+</head>
+<body>
+${shome_content}
+</body>
+</html>
+"
+
+len=$(echo "${content}" | wc -c)
+{ echo -ne "HTTP/1.0 200 OK\r\nContent-Length: ${len}\r\n\r\n"; echo "${content}"; }
